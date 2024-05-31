@@ -14,7 +14,11 @@ public class SenseDetectService {
     GibberishDetectorService gibberishDetectorService;
 
     public String verificarInteligibilidade(SenseDetectDTO senseDetectDTO) {
+        if(senseDetectDTO.mensagem() == null || senseDetectDTO.idioma() == null) {
+            throw new IllegalArgumentException("SenseDetectDTO com mensagem ou idioma nulo!");
+        }
         String idioma = senseDetectDTO.idioma();
+        
         if(!gibberishDetectorService.checkLanguageSupport(idioma)) {
             throw new IllegalArgumentException("Idioma não suportado: " + idioma);
         }

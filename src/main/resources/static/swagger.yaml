@@ -22,7 +22,7 @@ externalDocs:
   url: 'http://swagger.io'
 
 servers:
-  - url: http://localhost:8080/
+  - url: http://localhost:8079/
     description: The local development API server
 
 paths:
