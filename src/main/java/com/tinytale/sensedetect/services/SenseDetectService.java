@@ -15,7 +15,6 @@ public class SenseDetectService {
 
     public String verificarInteligibilidade(SenseDetectDTO senseDetectDTO) {
         String idioma = senseDetectDTO.idioma();
-        System.out.println(idioma);
         if(!gibberishDetectorService.checkLanguageSupport(idioma)) {
             throw new IllegalArgumentException("Idioma não suportado: " + idioma);
         }

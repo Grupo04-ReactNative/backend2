@@ -20,9 +20,7 @@ public class SenseDetectController {
     SenseDetectService service;
 
     @PostMapping
-
     public ResponseEntity<SenseDetectResponseDTO> verificarInteligibilidade(@RequestBody SenseDetectDTO senseDetectDTO) {
-
         return ResponseEntity.ok(new SenseDetectResponseDTO(service.verificarInteligibilidade(senseDetectDTO)));
     }
 
