@@ -1,0 +1,89 @@
+openapi: 3.1.0
+info:
+  title: TinyTale SenseDetect API
+  summary: O detector de inteligibilidade de TinyTale.
+  description: |
+    Retorna "allowed" se a mensagem é inteligível e "not_allowed" caso não seja.
+    No momento apenas caracteres da língua inglesa são utilizados na detecção.
+    Há previsão de incluir português e mais línguas.
+
+  termsOfService: https://tinytale.com/terms/
+  contact:
+    name: API Support
+    url: https://www.tinytale.com/support
+    email: support@tinytale.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.1
+
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+
+servers:
+  - url: https://api.tinytale.com/v1/sensedetect
+    description: The production API server
+
+paths:
+  /:
+    get:
+      summary: Verifica se a mensagem é compreensível ou não. Retorna allowed se a mensagem for inteligível e not_allowed se não for.
+      operationId: verificarInteligibilidade
+      tags:
+        - Verificar inteligibilidade
+      parameters:
+        - name: mensagem
+          in: query
+          description: A mensagem a ser verificada
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Indica se a tag é permitida ou não
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [allowed, not_allowed]
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/GeneralError'
+
+components:
+  schemas:
+    GeneralError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+  responses:
+    IllegalInput:
+      description: Illegal input for operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GeneralError'
+    NotFound:
+      description: Entity not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GeneralError'
+    GeneralError:
+      description: General error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GeneralError'
