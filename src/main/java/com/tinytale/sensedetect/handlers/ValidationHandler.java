@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ValidationHandler extends ResponseEntityExceptionHandler {
 
+	@SuppressWarnings("null")
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
