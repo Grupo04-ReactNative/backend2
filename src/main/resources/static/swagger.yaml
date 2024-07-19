@@ -25,35 +25,12 @@ servers:
   - url: http://localhost:8079/
     description: The local development API server
 
-paths:
-  /sensedetect:
-    post:
-      summary: Recebe e verifica se a mensagem é compreensível ou não. Retorna allowed se a mensagem for inteligível e not_allowed se não for.
-      operationId: verificarInteligibilidade
-      tags:
-        - Verificar inteligibilidade
-      requestBody:
-            description: Um objeto contendo a mensagem a ser verificada e seu idioma
-            required: true
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/SenseDetectDTO'
-      responses:
-        '200':
-          description: Indica se a mensagem é permitida ou não
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SenseDetectResponseDTO'
-        '400':
-          $ref: '#/components/responses/IllegalInput'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/GeneralError'
-
 components:
+  securitySchemes:
+    APIKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
   schemas:
     SenseDetectDTO:
       type: object
@@ -103,3 +80,36 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GeneralError'
+
+security:
+  - APIKeyAuth: []
+
+paths:
+  /sensedetect:
+    post:
+      summary: Recebe e verifica se a mensagem é compreensível ou não. Retorna allowed se a mensagem for inteligível e not_allowed se não for.
+      operationId: verificarInteligibilidade
+      tags:
+        - Verificar inteligibilidade
+      requestBody:
+            description: Um objeto contendo a mensagem a ser verificada e seu idioma
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SenseDetectDTO'
+      responses:
+        '200':
+          description: Indica se a mensagem é permitida ou não
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SenseDetectResponseDTO'
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/GeneralError'
+
+
